@@ -1,0 +1,8 @@
+__pycache__
+/.idea/*
+/installation/tools/*
+/installation/config.json
+/installation/.snakemake/*
+/envs/conda/*
+/test/*
+/.snakemake/*

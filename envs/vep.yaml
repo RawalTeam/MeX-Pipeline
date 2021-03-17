@@ -1,0 +1,7 @@
+name: mex_vep
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - ensembl-vep=103.1-0

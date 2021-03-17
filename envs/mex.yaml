@@ -1,0 +1,9 @@
+name: mex
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.7
+  - biopython=1.78
+  - snakemake
