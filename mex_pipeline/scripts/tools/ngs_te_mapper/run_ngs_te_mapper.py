@@ -2,6 +2,7 @@ import os
 import sys
 import json
 from glob import glob
+import time
 
 # noinspection PyUnresolvedReferences
 sys.path.append(snakemake.params.mex_path)
@@ -50,6 +51,7 @@ def execute(fq1, fq2, paired, genome, te_file, output_dir, tool_config, log_file
 
 
 if __name__ == "__main__":
+    start = time.time()
     # noinspection PyUnresolvedReferences
     execute(fq1=snakemake.input.fq1,
             genome=snakemake.input.genome,
@@ -60,3 +62,5 @@ if __name__ == "__main__":
             output_dir=snakemake.params.output_dir,
             threads=snakemake.threads,
             log_file=snakemake.params.log_file)
+    exec_time = (time.time() - start) / 60
+    MexUtils.console_print("info", f"NGS_TE_MAPPER completed in {exec_time} minutes")

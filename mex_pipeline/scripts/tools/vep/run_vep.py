@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 
 # noinspection PyUnresolvedReferences
 sys.path.append(snakemake.params.mex_path)
@@ -19,9 +20,12 @@ def execute(vcf, assembly, output, log_file, threads):
 
 
 if __name__ == "__main__":
+    start = time.time()
     # noinspection PyUnresolvedReferences
     execute(vcf=snakemake.input.vcf,
             output=snakemake.output[0],
             threads=snakemake.threads,
             log_file=snakemake.params.log_file,
             assembly=snakemake.params.assembly)
+    exec_time = (time.time() - start) / 60
+    MexUtils.console_print("info", f"VEP completed in {exec_time} minutes")

@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 
 # noinspection PyUnresolvedReferences
 sys.path.append(snakemake.params.mex_path)
@@ -28,6 +29,7 @@ def execute(fq1, fq2, paired, output_dir, thread, log_file):
 
 
 if __name__ == "__main__":
+    start = time.time()
     # noinspection PyUnresolvedReferences
     execute(fq1=snakemake.input.fq1,
             fq2=snakemake.params.fq2,
@@ -35,3 +37,5 @@ if __name__ == "__main__":
             output_dir=snakemake.params.output_dir,
             thread=snakemake.threads,
             log_file=snakemake.params.log_file)
+    exec_time = (time.time() - start) / 60
+    MexUtils.console_print("info", f"FASTQC completed in {exec_time} minutes")

@@ -1,6 +1,8 @@
 import sys
 import os
 
+import time
+
 # noinspection PyUnresolvedReferences
 sys.path.append(snakemake.params.mex_path)
 from mex_pipeline import MexUtils
@@ -27,9 +29,12 @@ def execute(input1_file, input2_file, output1_file, output2_file, log_file):
 
 
 if __name__ == "__main__":
+    start = time.time()
     # noinspection PyUnresolvedReferences
     execute(input1_file=snakemake.input.fq1,
             input2_file=snakemake.params.fq2,
             output1_file=snakemake.params.output1_file,
             output2_file=snakemake.params.output2_file,
             log_file=snakemake.params.log_file)
+    exec_time = (time.time() - start) / 60
+    MexUtils.console_print("info", f"FASTP completed in {exec_time} minutes")

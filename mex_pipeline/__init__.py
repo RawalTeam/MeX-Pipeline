@@ -5,6 +5,8 @@ import sys
 import json
 import traceback
 import time
+from datetime import datetime
+from pprint import pprint
 
 
 class MexUtils:
@@ -64,10 +66,10 @@ class MexUtils:
         return True
 
     @staticmethod
-    def run_subprocess(cmd, log=None, fatal=True, cwd=None):
+    def run_subprocess(cmd, log=None, fatal=True, cwd=None, log_mode="w"):
         if cwd is None:
             if log is not None:
-                with open(log, "w") as f:
+                with open(log, log_mode) as f:
                     try:
                         f.write(cmd)
                         subprocess.check_call(cmd, stdout=f, stderr=f, shell=True)
@@ -88,7 +90,7 @@ class MexUtils:
                         sys.exit(1)
         else:
             if log is not None:
-                with open(log, "w") as f:
+                with open(log, log_mode) as f:
                     try:
                         f.write(cmd)
                         subprocess.check_call(cmd, stdout=f, stderr=f, shell=True, cwd=cwd)
@@ -118,6 +120,10 @@ class MexUtils:
         if fq2 is not None:
             paired = True
         return paired
+
+    @staticmethod
+    def console_print(typ, msg):
+        print(f"[{datetime.now().strftime('%d-%b-%Y %H:%M:%S')}] [{typ.upper()}] {msg}")
 
 
 class Mex:
@@ -267,8 +273,10 @@ class Mex:
         cmd.append(self.config['targets']['vep'])
         cmd.append(self.config['targets']['fastqc'])
         MexUtils.run_subprocess(" ".join(cmd), fatal=False, cwd=self.out_dir)
-
+        exec_time = (time.time() - start) / 60
+        MexUtils.console_print("info", f"MeX completed in {exec_time} minutes")
+        MexUtils.console_print("info", "Generating Workflow Report")
         cmd.append(f"--report {self.out_dir + '/workflow.html'}")
         MexUtils.run_subprocess(" ".join(cmd), fatal=False, cwd=self.out_dir)
-        end = time.time()
-        print(f"MeX took {(end - start)/60} minutes")
+        end = (time.time() - start) / 60
+        MexUtils.console_print("info", f"Done in {end} minutes")
