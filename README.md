@@ -1,4 +1,4 @@
-# Mex Pipeline
+# MeX Pipeline
 
 ### Pre-requisites
 1. Conda (<a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> or <a href="https://www.anaconda.com/products/individual">Anaconda</a>)
@@ -19,7 +19,7 @@ conda activate mex
 python install_deps.py
 ```
 
-Running Mex-Pipeline
+Running MeX Pipeline
 ```bash
 conda activate mex
 python mex.py --fq1 path/of/fastq1 --genome path/of/fasta --te path/of/fasta --outdir path/of/output_folder -p 2
@@ -47,7 +47,7 @@ VEP determines the effect of your variants (SNPs, insertions, deletions, CNVs or
 ### Inputs
 #### Required
 1. FASTq file 1 (--fq1, -1)\
-Either the Read1 FASTQ file from a paired-end sequencing run, or the FASTQ file from an unpaired sequencing run.
+Either the Read1 FASTQ file from a paired-end sequencing, or the FASTQ file from an unpaired sequencing.
    
 2. Genome FASTA file (--genome, -g)\
 The genome sequence of the reference genome in FASTA format.
