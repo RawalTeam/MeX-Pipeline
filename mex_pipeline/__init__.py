@@ -163,13 +163,19 @@ class Mex:
     def place_genome_fasta(self):
         genome_dir = os.path.join(self.out_dir, self.genome_name, "genome")
         MexUtils.make_dirs(genome_dir)
-        shutil.copy(self.genome, os.path.join(genome_dir, self.genome_name + ".fasta"))
+        try:
+            os.symlink(self.genome, os.path.join(genome_dir, self.genome_name + ".fasta"))
+        except FileExistsError:
+            pass
         self.genome = os.path.join(genome_dir, self.genome_name + ".fasta")
 
     def place_te_fasta(self):
         te_dir = os.path.join(self.out_dir, self.genome_name, "te")
         MexUtils.make_dirs(te_dir)
-        shutil.copy(self.tefasta, os.path.join(te_dir, os.path.basename(self.tefasta)))
+        try:
+            os.symlink(self.tefasta, os.path.join(te_dir, os.path.basename(self.tefasta)))
+        except FileExistsError:
+            pass
         self.tefasta = os.path.join(te_dir, os.path.basename(self.tefasta))
 
     def create_config(self):

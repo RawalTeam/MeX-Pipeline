@@ -36,7 +36,7 @@ def make_vcf_files(inserts, output_dir):
     perfect_inserts = []
     non_reference_inserts = []
     for insert in inserts:
-        if insert.start > insert.end:
+        if insert.end < insert.start:
             malformed_inserts.append(insert)
         else:
             perfect_inserts.append(insert)
