@@ -1,5 +1,3 @@
-import os
-
 # noinspection PyUnresolvedReferences
 rule rule_run_fastp:
     input:
@@ -53,6 +51,7 @@ rule rule_run_ngs_te_mapper:
     conda: config['envs']['ngs_te_mapper']
     script: config['scripts']['ngs_te_mapper']
 
+# noinspection PyUnresolvedReferences
 rule rule_run_ngs_te_mapper2:
     input:
         fq1 = config['outputs']['fastp']['fqp1'],
@@ -74,13 +73,15 @@ rule rule_run_ngs_te_mapper2:
 # noinspection PyUnresolvedReferences
 rule rule_run_vep:
     input:
-        vcf = config['targets']['ngs_te_mapper'],
+        ngs_te_mapper_vcfs = config['targets']['ngs_te_mapper'],
+        ngs_te_mapper2_vcfs = config['targets']['ngs_te_mapper2'],
     params:
         log_file = config['logs']['vep'],
         mex_path = config['params']['mex_path'],
         assembly = config['args']['assembly']
     threads: config['args']['threads']
     output:
-        config['targets']['vep']
+        [config['targets']['vep'][0], config['targets']['vep'][1]],
+        [config['targets']['vep'][2], config['targets']['vep'][3]],
     conda: config['envs']['vep']
     script: config['scripts']['vep']
