@@ -1,0 +1,7 @@
+name: mex_ngs_te_mapper2
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - git

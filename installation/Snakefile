@@ -9,6 +9,16 @@ rule download_ngs_te_mapper:
     conda: config['ngs_te_mapper']['env']
     script: config['ngs_te_mapper']['script']
 
+rule download_ngs_te_mapper2:
+    output:
+        config['ngs_te_mapper2']['target']
+    params:
+        url = config['ngs_te_mapper2']['url'],
+        commit = config['ngs_te_mapper2']['commit'],
+        log = config['ngs_te_mapper2']['log'],
+        install_path = config['ngs_te_mapper2']['install_path']
+    conda: config['ngs_te_mapper2']['env_download']
+    script: config['ngs_te_mapper2']['script']
 
 rule download_vep:
     output:

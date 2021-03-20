@@ -213,6 +213,7 @@ class Mex:
                 },
                 "fastqc": os.path.join(self.out_dir, "outputs/fastqc"),
                 "ngs_te_mapper": os.path.join(self.out_dir, "outputs/ngs_te_mapper"),
+                "ngs_te_mapper2": os.path.join(self.out_dir, "outputs/ngs_te_mapper2"),
                 "vep": os.path.join(self.out_dir, "outputs/vep")
             },
             "targets": {
@@ -222,10 +223,15 @@ class Mex:
                     os.path.join(self.out_dir, "outputs/ngs_te_mapper", "non_reference.vcf"),
                     os.path.join(self.out_dir, "outputs/ngs_te_mapper", "complete.vcf")
                 ],
+                "ngs_te_mapper2": [
+                    os.path.join(self.out_dir, "outputs/ngs_te_mapper2", "non_reference.vcf"),
+                    os.path.join(self.out_dir, "outputs/ngs_te_mapper2", "reference.vcf")
+                ],
                 "vep": os.path.join(self.out_dir, "outputs/vep", sample_name + "_ann.vcf")
             },
             "envs": {
                 "ngs_te_mapper": self.tools_config_obj['ngs_te_mapper']['env'],
+                "ngs_te_mapper2": self.tools_config_obj['ngs_te_mapper2']['env'],
                 "preprocessing": self.tools_config_obj['preprocess']['env'],
                 "vep": self.tools_config_obj['vep']['env']
             },
@@ -233,12 +239,14 @@ class Mex:
                 "fastp": os.path.join(self.out_dir, "logs/fastp.log"),
                 "fastqc": os.path.join(self.out_dir, "logs/fastqc.log"),
                 "ngs_te_mapper": os.path.join(self.out_dir, "logs/ngs_te_mapper.log"),
+                "ngs_te_mapper2": os.path.join(self.out_dir, "logs/ngs_te_mapper2.log"),
                 "vep": os.path.join(self.out_dir, "logs/vep.log")
             },
             "scripts": {
                 "fastp": os.path.join(scripts_dir, "tools/fastp/run_fastp.py"),
                 "fastqc": os.path.join(scripts_dir, "tools/fastqc/run_fastqc.py"),
                 "ngs_te_mapper": os.path.join(scripts_dir, "tools/ngs_te_mapper/run_ngs_te_mapper.py"),
+                "ngs_te_mapper2": os.path.join(scripts_dir, "tools/ngs_te_mapper2/run_ngs_te_mapper2.py"),
                 "vep": os.path.join(scripts_dir, "tools/vep/run_vep.py")
             }
         }
@@ -276,8 +284,9 @@ class Mex:
         cmd.append("--use-conda")
         cmd.append("--conda-prefix " + os.path.join(self.PROJECT_DIR, "envs/conda"))
         cmd.append(f"--cores {self.threads}")
-        cmd.append(self.config['targets']['vep'])
         cmd.append(self.config['targets']['fastqc'])
+        cmd.append(self.config['targets']['vep'])
+        cmd.append(self.config['targets']['ngs_te_mapper2'][0])
         MexUtils.run_subprocess(" ".join(cmd), fatal=False, cwd=self.out_dir)
         exec_time = (time.time() - start) / 60
         MexUtils.console_print("info", f"MeX completed in {exec_time} minutes")

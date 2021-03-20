@@ -22,6 +22,17 @@ DEP = {
         "target": os.path.join(INSTALL_DIR, "ngs_te_mapper/sourceCode/ngs_te_mapper.R"),
         "script": os.path.join(INSTALL_BASE, "install_ngs_te_mapper.py")
     },
+    "ngs_te_mapper2": {
+        "url": "https://github.com/bergmanlab/ngs_te_mapper2.git",
+        "commit": "59d20a4bf1b2491193383293240c1c13dcfaa0d3",
+        "install_path": os.path.join(INSTALL_DIR, "ngs_te_mapper2"),
+        "type": "github",
+        "env": os.path.join(INSTALL_DIR, "ngs_te_mapper2/envs/ngs_te_mapper2.yml"),
+        "env_download": os.path.join(ENV_DIR, "ngstemapper2.yaml"),
+        "log": INSTALL_DIR + "/ngs_te_mapper2.log",
+        "target": os.path.join(INSTALL_DIR, "ngs_te_mapper2/README.md"),
+        "script": os.path.join(INSTALL_BASE, "install_ngs_te_mapper2.py")
+    },
     "vep": {
         "type": "conda",
         "env": os.path.join(ENV_DIR, "vep.yaml"),
@@ -60,7 +71,8 @@ def execute(cores):
            "--conda-prefix " + os.path.join(ENV_DIR, "conda"),
            f"--cores {cores}",
            DEP['vep']['target'],
-           DEP['ngs_te_mapper']['target']]
+           DEP['ngs_te_mapper']['target'],
+           DEP['ngs_te_mapper2']['target']]
     subprocess.check_call([" ".join(cmd)], cwd=os.path.join(PROJECT_DIR, "installation"), shell=True)
 
 

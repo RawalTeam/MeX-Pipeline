@@ -11,7 +11,7 @@ rule rule_run_fastp:
         output2_file = config['outputs']['fastp']['fqp2'],
         log_file = config['logs']['fastp'],
         mex_path = config['params']['mex_path']
-    threads: config['args']['threads']
+    threads: 2
     output:
         config['outputs']['fastp']['fqp1']
     conda: config['envs']['preprocessing']
@@ -27,7 +27,7 @@ rule rule_run_fastqc:
         output_dir = config['outputs']['fastqc'],
         log_file = config['logs']['fastqc'],
         mex_path = config['params']['mex_path']
-    threads: config['args']['threads']
+    threads: 2
     output:
         config['targets']['fastqc']
     conda: config['envs']['preprocessing']
@@ -52,6 +52,24 @@ rule rule_run_ngs_te_mapper:
         config['targets']['ngs_te_mapper'][1]
     conda: config['envs']['ngs_te_mapper']
     script: config['scripts']['ngs_te_mapper']
+
+rule rule_run_ngs_te_mapper2:
+    input:
+        fq1 = config['outputs']['fastp']['fqp1'],
+        genome = config['args']['genome'],
+        te_fasta = config['args']['te'],
+    params:
+        fq2 = config['outputs']['fastp']['fqp2'],
+        paired = config['params']['paired'],
+        tool_config = config['params']['tools_config'],
+        output_dir = config['outputs']['ngs_te_mapper2'],
+        log_file = config['logs']['ngs_te_mapper2'],
+        mex_path = config['params']['mex_path']
+    threads: config['args']['threads']
+    output:
+        config['targets']['ngs_te_mapper2'][0]
+    conda: config['envs']['ngs_te_mapper2']
+    script: config['scripts']['ngs_te_mapper2']
 
 # noinspection PyUnresolvedReferences
 rule rule_run_vep:
