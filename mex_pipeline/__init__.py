@@ -125,6 +125,18 @@ class MexUtils:
     def console_print(typ, msg):
         print(f"[{datetime.now().strftime('%d-%b-%Y %H:%M:%S')}] [{typ.upper()}] {msg}")
 
+    @staticmethod
+    def calculate_max_threads_per_rule(max_threads, multi_methods_used):
+        if multi_methods_used > 1:
+            is_even = False
+            if max_threads % 2 == 0:
+                is_even = True
+
+            max_threads = max_threads // 2
+            if is_even:
+                max_threads = max_threads - 1
+        return max_threads
+
 
 class Mex:
 
@@ -198,7 +210,8 @@ class Mex:
                 "te": self.tefasta,
                 "outdir": self.out_dir,
                 "force": self.force,
-                "threads": self.threads,
+                "processes": self.threads,
+                "threads": max(1, MexUtils.calculate_max_threads_per_rule(int(self.threads), multi_methods_used=5)),
                 "assembly": ""
             },
             "params": {
