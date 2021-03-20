@@ -8,18 +8,15 @@ from mex_pipeline import MexUtils
 
 
 def execute(ngs_te_mapper_vcfs, ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads):
-    ngs_te_mapper_vep_results = outputs[0]
-    ngs_te_mapper2_vep_results = outputs[1]
-
     ngs_te_mapper_non_ref_vcf = ngs_te_mapper_vcfs[0]
     ngs_te_mapper_complete_vcf = ngs_te_mapper_vcfs[1]
-    ngs_te_mapper_non_ref_ann_vcf = ngs_te_mapper_vep_results[0]
-    ngs_te_mapper_complete_ann_vcf = ngs_te_mapper_vep_results[1]
+    ngs_te_mapper_non_ref_ann_vcf = outputs[0]
+    ngs_te_mapper_complete_ann_vcf = outputs[1]
 
     ngs_te_mapper2_non_ref_vcf = ngs_te_mapper2_vcfs[0]
     ngs_te_mapper2_ref_vcf = ngs_te_mapper2_vcfs[1]
-    ngs_te_mapper2_non_ref_ann_vcf = ngs_te_mapper2_vep_results[0]
-    ngs_te_mapper2_ref_ann_vcf = ngs_te_mapper2_vep_results[1]
+    ngs_te_mapper2_non_ref_ann_vcf = outputs[2]
+    ngs_te_mapper2_ref_ann_vcf = outputs[3]
 
     if MexUtils.check_dir_exists(os.path.dirname(ngs_te_mapper_non_ref_ann_vcf)):
         MexUtils.rm_dirs(os.path.dirname(ngs_te_mapper_non_ref_ann_vcf))

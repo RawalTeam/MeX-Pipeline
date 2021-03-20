@@ -228,10 +228,10 @@ class Mex:
                     os.path.join(self.out_dir, "outputs/ngs_te_mapper2", "reference.vcf")
                 ],
                 "vep": [
-                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper", sample_name + "reference_ann.vcf"),
-                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper", sample_name + "non_reference_ann.vcf"),
-                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper2", sample_name + "reference_ann.vcf"),
-                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper2", sample_name + "non_reference_ann.vcf"),
+                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper", sample_name + "_reference_ann.vcf"),
+                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper", sample_name + "_non_reference_ann.vcf"),
+                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper2", sample_name + "_reference_ann.vcf"),
+                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper2", sample_name + "_non_reference_ann.vcf"),
                 ]
             },
             "envs": {
@@ -290,8 +290,7 @@ class Mex:
         cmd.append("--conda-prefix " + os.path.join(self.PROJECT_DIR, "envs/conda"))
         cmd.append(f"--cores {self.threads}")
         cmd.append(self.config['targets']['fastqc'])
-        cmd.append(self.config['targets']['vep'])
-        cmd.append(self.config['targets']['ngs_te_mapper2'][0])
+        cmd.append(self.config['targets']['vep'][0])
         MexUtils.run_subprocess(" ".join(cmd), fatal=False, cwd=self.out_dir)
         exec_time = (time.time() - start) / 60
         MexUtils.console_print("info", f"MeX completed in {exec_time} minutes")

@@ -66,7 +66,8 @@ rule rule_run_ngs_te_mapper2:
         mex_path = config['params']['mex_path']
     threads: config['args']['threads']
     output:
-        config['targets']['ngs_te_mapper2'][0]
+        config['targets']['ngs_te_mapper2'][0],
+        config['targets']['ngs_te_mapper2'][1]
     conda: config['envs']['ngs_te_mapper2']
     script: config['scripts']['ngs_te_mapper2']
 
@@ -81,7 +82,7 @@ rule rule_run_vep:
         assembly = config['args']['assembly']
     threads: config['args']['threads']
     output:
-        [config['targets']['vep'][0], config['targets']['vep'][1]],
-        [config['targets']['vep'][2], config['targets']['vep'][3]],
+        config['targets']['vep'][0], config['targets']['vep'][1],
+        config['targets']['vep'][2], config['targets']['vep'][3],
     conda: config['envs']['vep']
     script: config['scripts']['vep']
