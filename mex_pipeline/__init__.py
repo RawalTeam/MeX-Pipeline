@@ -11,6 +11,7 @@ from pprint import pprint
 
 class MexUtils:
 
+    # Check for fastq file
     @staticmethod
     def check_fastq(fastq_file):
         if MexUtils.check_file_exists(fastq_file):
@@ -18,6 +19,7 @@ class MexUtils:
                 return True
         return False
 
+    #Check for fasta file
     @staticmethod
     def check_fasta(fasta_file):
         if MexUtils.check_file_exists(fasta_file):
@@ -25,6 +27,7 @@ class MexUtils:
                 return True
         return False
 
+    # Check if file exists
     @staticmethod
     def check_file_exists(f):
         if os.path.exists(f):
@@ -32,6 +35,7 @@ class MexUtils:
                 return True
         return False
 
+    # Check if directory exists
     @staticmethod
     def check_dir_exists(f):
         if os.path.exists(f):
@@ -39,12 +43,14 @@ class MexUtils:
                 return True
         return False
 
+    # Check if file is empty
     @staticmethod
     def is_file_empty(f):
         if os.stat(f).st_size == 0:
             return True
         return False
 
+    # Make directory if it doesn't exist
     @staticmethod
     def make_dirs(f):
         if not MexUtils.check_dir_exists(f):
@@ -55,6 +61,7 @@ class MexUtils:
                 return False
         return True
 
+    # Remove directory if it exists
     @staticmethod
     def rm_dirs(f):
         if MexUtils.check_dir_exists(f):
@@ -64,6 +71,8 @@ class MexUtils:
             except OSError:
                 return False
         return True
+
+    # Run CMD as subprocess ???????????
 
     @staticmethod
     def run_subprocess(cmd, log=None, fatal=True, cwd=None, log_mode="w"):
@@ -110,10 +119,12 @@ class MexUtils:
                     if fatal:
                         sys.exit(1)
 
+    # Write into log
     @staticmethod
     def write_into_log(log, message):
         log.write(message)
 
+    # Check if the reads are paired
     @staticmethod
     def is_paired_reads_provided(fq2):
         paired = False
@@ -121,10 +132,12 @@ class MexUtils:
             paired = True
         return paired
 
+    #Give out date/time in console/terminal
     @staticmethod
     def console_print(typ, msg):
         print(f"[{datetime.now().strftime('%d-%b-%Y %H:%M:%S')}] [{typ.upper()}] {msg}")
 
+<<<<<<< Updated upstream
     @staticmethod
     def calculate_max_threads_per_rule(max_threads, multi_methods_used):
         if multi_methods_used > 1:
@@ -138,8 +151,12 @@ class MexUtils:
         return max_threads
 
 
+=======
+#Define Mex and it's functions
+>>>>>>> Stashed changes
 class Mex:
 
+    # Initialization function
     def __init__(self, cli_args):
         self.PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -172,6 +189,7 @@ class Mex:
 
         self.snakefile_path = os.path.join(self.PROJECT_DIR, "Snakefile")
 
+    # Fetch Genome
     def place_genome_fasta(self):
         genome_dir = os.path.join(self.out_dir, self.genome_name, "genome")
         MexUtils.make_dirs(genome_dir)
@@ -181,6 +199,7 @@ class Mex:
             pass
         self.genome = os.path.join(genome_dir, self.genome_name + ".fasta")
 
+    # Fetch TE fasta
     def place_te_fasta(self):
         te_dir = os.path.join(self.out_dir, self.genome_name, "te")
         MexUtils.make_dirs(te_dir)
@@ -190,6 +209,7 @@ class Mex:
             pass
         self.tefasta = os.path.join(te_dir, os.path.basename(self.tefasta))
 
+    # Configuration ??????
     def create_config(self):
         scripts_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "scripts")
         is_paired = MexUtils.is_paired_reads_provided(self.fastq2)
@@ -270,6 +290,7 @@ class Mex:
         }
         return config_obj
 
+    # Check input files
     def check_input_files(self):
         if not MexUtils.check_fasta(self.genome):
             sys.exit(1)
@@ -280,6 +301,7 @@ class Mex:
         if self.fastq2 is not None and not MexUtils.check_fastq(self.fastq2):
             sys.exit(1)
 
+    # Execute pipeline 
     def execute_pipeline(self):
         start = time.time()
         print(f"{'*'*25} Executing MeX (v1) {'*'*25}")
