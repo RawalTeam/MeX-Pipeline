@@ -137,7 +137,6 @@ class MexUtils:
     def console_print(typ, msg):
         print(f"[{datetime.now().strftime('%d-%b-%Y %H:%M:%S')}] [{typ.upper()}] {msg}")
 
-<<<<<<< Updated upstream
     @staticmethod
     def calculate_max_threads_per_rule(max_threads, multi_methods_used):
         if multi_methods_used > 1:
@@ -151,9 +150,6 @@ class MexUtils:
         return max_threads
 
 
-=======
-#Define Mex and it's functions
->>>>>>> Stashed changes
 class Mex:
 
     # Initialization function
