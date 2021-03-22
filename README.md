@@ -2,7 +2,7 @@
 
 ### Pre-requisites
 1. Conda (<a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> or <a href="https://www.anaconda.com/products/individual">Anaconda</a>)
-2. Linux
+2. Linux (with bash shell enabled)
 3. Git
 
 ### Getting Started
