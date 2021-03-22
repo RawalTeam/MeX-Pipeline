@@ -1,3 +1,5 @@
+#Defining Snakemake parameters.
+
 rule download_ngs_te_mapper:
     output:
         config['ngs_te_mapper']['target']
