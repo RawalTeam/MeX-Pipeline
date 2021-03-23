@@ -61,7 +61,6 @@ def execute(cores):
            "--conda-prefix " + os.path.join(ENV_DIR, "conda"),
            f"--cores {cores}",
            DEP['vep']['target'],
-           DEP['ngs_te_mapper']['target'],
            DEP['ngs_te_mapper2']['target']]
     subprocess.check_call([" ".join(cmd)], cwd=os.path.join(PROJECT_DIR, "installation"), shell=True)
 
