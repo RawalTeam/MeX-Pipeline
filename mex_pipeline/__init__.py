@@ -225,17 +225,12 @@ class Mex:
                     "fqp2": os.path.join(self.out_dir, "outputs/fastp", fqp2_name + ".fastq") if is_paired else None
                 },
                 "fastqc": os.path.join(self.out_dir, "outputs/fastqc"),
-                "ngs_te_mapper": os.path.join(self.out_dir, "outputs/ngs_te_mapper"),
                 "ngs_te_mapper2": os.path.join(self.out_dir, "outputs/ngs_te_mapper2"),
                 "vep": os.path.join(self.out_dir, "outputs/vep")
             },
             "targets": {
                 "fastp": os.path.join(self.out_dir, "outputs/fastp", "fastp.html"),
                 "fastqc": os.path.join(self.out_dir, "outputs/fastqc", "fastqc_done.txt"),
-                "ngs_te_mapper": [
-                    os.path.join(self.out_dir, "outputs/ngs_te_mapper", "non_reference.vcf"),
-                    os.path.join(self.out_dir, "outputs/ngs_te_mapper", "complete.vcf")
-                ],
                 "ngs_te_mapper2": [
                     os.path.join(self.out_dir, "outputs/ngs_te_mapper2", "non_reference.vcf"),
                     os.path.join(self.out_dir, "outputs/ngs_te_mapper2", "reference.vcf")
@@ -248,7 +243,6 @@ class Mex:
                 ]
             },
             "envs": {
-                "ngs_te_mapper": self.tools_config_obj['ngs_te_mapper']['env'],
                 "ngs_te_mapper2": self.tools_config_obj['ngs_te_mapper2']['env'],
                 "preprocessing": self.tools_config_obj['preprocess']['env'],
                 "vep": self.tools_config_obj['vep']['env']
@@ -256,14 +250,12 @@ class Mex:
             "logs": {
                 "fastp": os.path.join(self.out_dir, "logs/fastp.log"),
                 "fastqc": os.path.join(self.out_dir, "logs/fastqc.log"),
-                "ngs_te_mapper": os.path.join(self.out_dir, "logs/ngs_te_mapper.log"),
                 "ngs_te_mapper2": os.path.join(self.out_dir, "logs/ngs_te_mapper2.log"),
                 "vep": os.path.join(self.out_dir, "logs/vep.log")
             },
             "scripts": {
                 "fastp": os.path.join(scripts_dir, "tools/fastp/run_fastp.py"),
                 "fastqc": os.path.join(scripts_dir, "tools/fastqc/run_fastqc.py"),
-                "ngs_te_mapper": os.path.join(scripts_dir, "tools/ngs_te_mapper/run_ngs_te_mapper.py"),
                 "ngs_te_mapper2": os.path.join(scripts_dir, "tools/ngs_te_mapper2/run_ngs_te_mapper2.py"),
                 "vep": os.path.join(scripts_dir, "tools/vep/run_vep.py")
             }

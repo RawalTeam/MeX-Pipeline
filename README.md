@@ -38,8 +38,8 @@ A tool designed to provide fast all-in-one preprocessing for FastQ files. This t
 * <a href="https://github.com/s-andrews/FastQC">FASTQc</a>\
 FastQC is a program designed to spot potential problems in high througput sequencing datasets. It runs a set of analyses on one or more raw sequence files in fastq or bam format and produces a report which summarises the results.
 
-* <a href="https://github.com/bergmanlab/ngs_te_mapper">ngs_te_mapper</a>\
-ngs_te_mapper is an R implementation of the method for detecting transposable element (TE) insertions from next-generation sequencing (NGS).
+* <a href="https://github.com/bergmanlab/ngs_te_mapper2">ngs_te_mapper2</a>\
+ngs_te_mapper2 is a re-implementation of the method for detecting transposable element (TE) insertions from next-generation sequencing (NGS) data originally described in Linheiro and Bergman (2012) PLoS ONE 7(2): e30008. ngs_te_mapper2 uses a three-stage procedure to annotate non-reference TEs as the span of target site duplication (TSD), following the framework described in Bergman (2012) Mob Genet Elements. 2:51-54.
   
 * <a href="https://www.ensembl.org/vep">Ensembl Variant Effect Predictor (VEP)</a>\
 VEP determines the effect of your variants (SNPs, insertions, deletions, CNVs or structural variants) on genes, transcripts, and protein sequence, as well as regulatory regions.
@@ -65,7 +65,7 @@ The Read2 FASTQ file from a paired-end sequencing run.
         |_ outputs
             |_ fastp*
             |_ fastqc*
-            |_ ngs_te_mapper*
+            |_ ngs_te_mapper2*
             |_ vep* (created only if non-reference TE found)
         |_ config.json (internal configuration file)
         |_ Snakefile (snakemake file)

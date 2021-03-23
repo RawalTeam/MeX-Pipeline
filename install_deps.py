@@ -12,16 +12,6 @@ ENV_DIR = os.path.dirname(os.path.abspath(__file__)) + "/envs"
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 DEP = {
-    "ngs_te_mapper": {
-        "url": "https://github.com/bergmanlab/ngs_te_mapper.git",
-        "commit": "f9f48996ac346ac86d57edbd00534aa1227b753e",
-        "install_path": os.path.join(INSTALL_DIR, "ngs_te_mapper"),
-        "type": "github",
-        "env": os.path.join(ENV_DIR, "ngstemapper.yaml"),
-        "log": INSTALL_DIR + "/ngs_te_mapper.log",
-        "target": os.path.join(INSTALL_DIR, "ngs_te_mapper/sourceCode/ngs_te_mapper.R"),
-        "script": os.path.join(INSTALL_BASE, "install_ngs_te_mapper.py")
-    },
     "ngs_te_mapper2": {
         "url": "https://github.com/bergmanlab/ngs_te_mapper2.git",
         "commit": "59d20a4bf1b2491193383293240c1c13dcfaa0d3",
