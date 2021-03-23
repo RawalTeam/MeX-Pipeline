@@ -1,14 +1,3 @@
-rule download_ngs_te_mapper:
-    output:
-        config['ngs_te_mapper']['target']
-    params:
-        url = config['ngs_te_mapper']['url'],
-        commit = config['ngs_te_mapper']['commit'],
-        log = config['ngs_te_mapper']['log'],
-        install_path = config['ngs_te_mapper']['install_path']
-    conda: config['ngs_te_mapper']['env']
-    script: config['ngs_te_mapper']['script']
-
 rule download_ngs_te_mapper2:
     output:
         config['ngs_te_mapper2']['target']
