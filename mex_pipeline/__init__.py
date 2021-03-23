@@ -236,8 +236,6 @@ class Mex:
                     os.path.join(self.out_dir, "outputs/ngs_te_mapper2", "reference.vcf")
                 ],
                 "vep": [
-                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper", sample_name + "_reference_ann.vcf"),
-                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper", sample_name + "_non_reference_ann.vcf"),
                     os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper2", sample_name + "_reference_ann.vcf"),
                     os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper2", sample_name + "_non_reference_ann.vcf"),
                 ]
