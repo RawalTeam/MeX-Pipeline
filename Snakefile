@@ -9,7 +9,7 @@ rule rule_run_fastp:
         output2_file = config['outputs']['fastp']['fqp2'],
         log_file = config['logs']['fastp'],
         mex_path = config['params']['mex_path']
-    threads: 2
+    threads: config['args']['processes']
     output:
         config['outputs']['fastp']['fqp1']
     conda: config['envs']['preprocessing']
@@ -25,7 +25,7 @@ rule rule_run_fastqc:
         output_dir = config['outputs']['fastqc'],
         log_file = config['logs']['fastqc'],
         mex_path = config['params']['mex_path']
-    threads: 2
+    threads: config['args']['processes']
     output:
         config['targets']['fastqc']
     conda: config['envs']['preprocessing']
