@@ -13,14 +13,19 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
     ngs_te_mapper2_non_ref_ann_vcf = outputs[1]
     ngs_te_mapper2_ref_ann_vcf = outputs[0]
 
+    ngs_te_mapper2_non_ref_ann_vcf_name = os.path.basename(outputs[1]).split(".")[0]
+    ngs_te_mapper2_ref_ann_vcf_name = os.path.basename(outputs[0]).split(".")[0]
+
+    out_dir = os.path.dirname(ngs_te_mapper2_non_ref_ann_vcf)
+
     if MexUtils.check_dir_exists(os.path.dirname(ngs_te_mapper2_non_ref_ann_vcf)):
         MexUtils.rm_dirs(os.path.dirname(ngs_te_mapper2_non_ref_ann_vcf))
 
     if not MexUtils.make_dirs(os.path.dirname(ngs_te_mapper2_non_ref_ann_vcf)):
         sys.exit(1)
 
-    warn_dir = os.path.join(os.path.dirname(ngs_te_mapper2_non_ref_ann_vcf), "warn")
-    html_dir = os.path.join(os.path.dirname(ngs_te_mapper2_non_ref_ann_vcf), "html")
+    warn_dir = os.path.join(out_dir, "warn")
+    html_dir = os.path.join(out_dir, "html")
 
     if not MexUtils.make_dirs(warn_dir):
         sys.exit(1)
@@ -31,12 +36,12 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
     if MexUtils.check_file_exists(ngs_te_mapper2_non_ref_vcf):
         if not MexUtils.is_file_empty(ngs_te_mapper2_non_ref_vcf):
             cmd = f"vep -i {ngs_te_mapper2_non_ref_vcf} -o {ngs_te_mapper2_non_ref_ann_vcf} -e --warning_file " \
-                  f"{os.path.join(warn_dir, ngs_te_mapper2_non_ref_ann_vcf + '_warn.txt')} --fork {threads} " \
+                  f"{os.path.join(warn_dir, ngs_te_mapper2_non_ref_ann_vcf_name + '_warn.txt')} --fork {threads} " \
                   f"--cache --refseq -a {assembly}  --dir {cache_dir} --tab --fields " \
                   f"\"Uploaded_variation,Location,SYMBOL,ZYG,CANONICAL,Allele,Gene,Feature,Feature_type,Consequence," \
                   f"Amino_acids,Codons,Existing_variation,IMPACT,VARIANT_CLASS,HGVSc,HGVSp,HGVSg,INTRON,EXON,BIOTYPE," \
                   f"AF,PUBMED,PHENO,SIFT,PolyPhen\" --stats_file " \
-                  f"{os.path.join(html_dir, ngs_te_mapper2_non_ref_ann_vcf + '.html')}"
+                  f"{os.path.join(html_dir, ngs_te_mapper2_non_ref_ann_vcf_name + '.html')}"
             MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
         else:
             cmd = f"touch {ngs_te_mapper2_non_ref_ann_vcf}"
@@ -48,12 +53,12 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
     if MexUtils.check_file_exists(ngs_te_mapper2_ref_vcf):
         if not MexUtils.is_file_empty(ngs_te_mapper2_ref_vcf):
             cmd = f"vep -i {ngs_te_mapper2_ref_vcf} -o {ngs_te_mapper2_ref_ann_vcf} -e --warning_file " \
-                  f"{os.path.join(warn_dir, ngs_te_mapper2_ref_vcf + '_warn.txt')} --fork {threads} " \
+                  f"{os.path.join(warn_dir, ngs_te_mapper2_ref_ann_vcf_name + '_warn.txt')} --fork {threads} " \
                  f"--cache --refseq -a {assembly}  --dir {cache_dir} --tab --fields " \
                   f"\"Uploaded_variation,Location,SYMBOL,ZYG,CANONICAL,Allele,Gene,Feature,Feature_type,Consequence," \
                   f"Amino_acids,Codons,Existing_variation,IMPACT,VARIANT_CLASS,HGVSc,HGVSp,HGVSg,INTRON,EXON,BIOTYPE," \
                   f"AF,PUBMED,PHENO,SIFT,PolyPhen\" --stats_file " \
-                  f"{os.path.join(html_dir, ngs_te_mapper2_ref_ann_vcf + '.html')}"
+                  f"{os.path.join(html_dir, ngs_te_mapper2_ref_ann_vcf_name + '.html')}"
             MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
         else:
             cmd = f"touch {ngs_te_mapper2_ref_ann_vcf}"
@@ -64,12 +69,12 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
 
     if not MexUtils.is_file_empty(ngs_te_mapper2_ref_ann_vcf):
         cmd = f"filter_vep -i {ngs_te_mapper2_ref_ann_vcf} -filter \"CANONICAL\" " \
-              f"-o {'canonical_' + ngs_te_mapper2_ref_ann_vcf}"
+              f"-o {os.path.join(out_dir, 'canonical_' + ngs_te_mapper2_ref_ann_vcf_name)}"
         MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
 
     if not MexUtils.is_file_empty(ngs_te_mapper2_non_ref_ann_vcf):
         cmd = f"filter_vep -i {ngs_te_mapper2_non_ref_ann_vcf} -filter \"CANONICAL\" " \
-              f"-o {'canonical_' + ngs_te_mapper2_non_ref_ann_vcf}"
+              f"-o {os.path.join(out_dir, 'canonical_' + ngs_te_mapper2_non_ref_ann_vcf_name)}"
         MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
 
 
