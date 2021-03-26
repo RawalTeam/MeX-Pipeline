@@ -19,6 +19,29 @@ conda activate mex
 python install_deps.py
 ```
 
+```
+usage: install_deps.py [-h] [-p PROCESSES] [-a ASSEMBLY] [-d CACHEDIR]
+                       [-oa ONLY_ASSEMBLY]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -p PROCESSES, --processes PROCESSES
+                        Number of processes used (default: 2)
+  -a ASSEMBLY, --assembly ASSEMBLY
+                        Genome assembly ex., GRCh38, GRCh37, and other. See
+                        VEP docs (https://www.ensembl.org/info/docs/tools/vep
+                        /script/vep_other.html#assembly) (default: GRCh38)
+  -d CACHEDIR, --cachedir CACHEDIR
+                        VEP Data directory (default: /home/dell/.vep)
+  -oa ONLY_ASSEMBLY, --only-assembly ONLY_ASSEMBLY
+                        Download Genome assembly ex., GRCh38, GRCh37, and
+                        other. See VEP docs (https://www.ensembl.org/info/doc
+                        s/tools/vep/script/vep_other.html#assembly) in
+                        existing VEP cache directory. Requires config.json in
+                        installation directory (default: None)
+
+```
+
 Running MeX Pipeline
 ```bash
 conda activate mex
@@ -73,22 +96,26 @@ The Read2 FASTQ file from a paired-end sequencing run.
     
     * Is a directory
 
-### Usages
+### Usages of mex.py
 ```
 usage: mex.py [-h] -1 FQ1 -g GENOME -te TE -O OUTDIR [-2 FQ2] [-p PROCESSES]
-              [--force]
+              [-a ASSEMBLY] [--force]
 
 optional arguments:
   -h, --help            show this help message and exit
-  -1 FQ1, --fq1 FQ1     FASTQ Read 1 *
+  -1 FQ1, --fq1 FQ1     FASTQ Read 1 * (default: None)
   -g GENOME, --genome GENOME
-                        Genome FASTA *
-  -te TE, --te TE       TE FASTA *
+                        Genome FASTA * (default: None)
+  -te TE, --te TE       TE FASTA * (default: None)
   -O OUTDIR, --outdir OUTDIR
-                        Output Directory *
-  -2 FQ2, --fq2 FQ2     FASTQ Read 2
+                        Output Directory * (default: None)
+  -2 FQ2, --fq2 FQ2     FASTQ Read 2 (default: None)
   -p PROCESSES, --processes PROCESSES
-                        Number of processes for multiprocessing
-  --force               Rerun entire MeX pipeline
+                        Number of processes for multiprocessing (default: 2)
+  -a ASSEMBLY, --assembly ASSEMBLY
+                        Genome assembly ex., GRCh38, GRCh37, and other. See
+                        VEP docs (https://www.ensembl.org/info/docs/tools/vep
+                        /script/vep_other.html#assembly) (default: GRCh38)
+  --force               Rerun entire MeX pipeline (default: False)
 
 ```

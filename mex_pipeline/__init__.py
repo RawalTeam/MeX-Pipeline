@@ -153,6 +153,7 @@ class Mex:
         self.out_dir = os.path.abspath(cli_args.outdir)
         self.threads = cli_args.processes
         self.force = cli_args.force
+        self.assembly = cli_args.assembly
 
         self.genome_name = os.path.basename(self.genome).split(".")[0]
 
@@ -212,12 +213,13 @@ class Mex:
                 "force": self.force,
                 "processes": self.threads,
                 "threads": max(1, MexUtils.calculate_max_threads_per_rule(int(self.threads), multi_methods_used=5)),
-                "assembly": ""
+                "assembly": self.assembly
             },
             "params": {
                 "paired": is_paired,
                 "tools_config": self.tools_config,
-                "mex_path": os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                "mex_path": os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                "vep_cache_dir": self.tools_config_obj['vep']['cache_dir']
             },
             "outputs": {
                 "fastp": {
@@ -278,6 +280,7 @@ class Mex:
         print(f"FASTQ 2 = {self.fastq2}")
         print(f"GENOME = {self.genome}")
         print(f"TE FASTA = {self.tefasta}")
+        print(f"ASSEMBLY = {self.assembly}")
         print(f"OUTPUT DIRECTORY = {self.out_dir}/outputs")
         print(f"LOG DIRECTORY = {self.out_dir}/logs")
         print(f"NUMBER OF PROCESS = {self.threads}")

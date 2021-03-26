@@ -59,7 +59,8 @@ rule rule_run_vep:
     params:
         log_file = config['logs']['vep'],
         mex_path = config['params']['mex_path'],
-        assembly = config['args']['assembly']
+        assembly = config['args']['assembly'],
+        cache_dir = config['params']['vep_cache_dir']
     threads: config['args']['processes']
     output:
         config['targets']['vep'][0], config['targets']['vep'][1],

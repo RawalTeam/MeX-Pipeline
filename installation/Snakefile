@@ -13,6 +13,20 @@ rule download_vep:
     output:
         config['vep']['target']
     params:
-        log = config['vep']['log']
+        log = config['vep']['log'],
+        cache_dir = config['vep']['cache_dir'],
+        assembly = config['vep']['only_assembly'],
+        exists = False
+    conda: config['vep']['env']
+    script: config['vep']['script']
+
+rule download_vep_assembly:
+    output:
+        config['vep']['target'] + f".{config['vep']['only_assembly']}.txt"
+    params:
+        log = config['vep']['log'],
+        cache_dir = config['vep']['cache_dir'],
+        assembly = config['vep']['only_assembly'],
+        exists = True
     conda: config['vep']['env']
     script: config['vep']['script']

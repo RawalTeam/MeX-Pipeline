@@ -7,7 +7,7 @@ sys.path.append(snakemake.params.mex_path)
 from mex_pipeline import MexUtils
 
 
-def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads):
+def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir):
     ngs_te_mapper2_non_ref_vcf = ngs_te_mapper2_vcfs[0]
     ngs_te_mapper2_ref_vcf = ngs_te_mapper2_vcfs[1]
     ngs_te_mapper2_non_ref_ann_vcf = outputs[0]
@@ -22,7 +22,8 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads):
     if MexUtils.check_file_exists(ngs_te_mapper2_non_ref_vcf):
         if not MexUtils.is_file_empty(ngs_te_mapper2_non_ref_vcf):
             cmd = f"vep -i {ngs_te_mapper2_non_ref_vcf} -o {ngs_te_mapper2_non_ref_ann_vcf} -e --warning_file " \
-                  f"{ngs_te_mapper2_non_ref_ann_vcf + '_warn.txt'} --fork {threads} --cache --refseq"
+                  f"{ngs_te_mapper2_non_ref_ann_vcf + '_warn.txt'} --fork {threads} --cache --refseq -a {assembly} " \
+                  f"--dir {cache_dir}"
             MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
         else:
             cmd = f"touch {ngs_te_mapper2_non_ref_ann_vcf}"
@@ -34,7 +35,8 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads):
     if MexUtils.check_file_exists(ngs_te_mapper2_ref_vcf):
         if not MexUtils.is_file_empty(ngs_te_mapper2_ref_vcf):
             cmd = f"vep -i {ngs_te_mapper2_ref_vcf} -o {ngs_te_mapper2_ref_ann_vcf} -e --warning_file " \
-                  f"{ngs_te_mapper2_ref_ann_vcf + '_warn.txt'} --fork {threads} --cache --refseq"
+                  f"{ngs_te_mapper2_ref_ann_vcf + '_warn.txt'} --fork {threads} --cache --refseq -a {assembly} " \
+                  f"--dir {cache_dir}"
             MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
         else:
             cmd = f"touch {ngs_te_mapper2_ref_ann_vcf}"
@@ -51,6 +53,7 @@ if __name__ == "__main__":
             outputs=snakemake.output,
             threads=snakemake.threads,
             log_file=snakemake.params.log_file,
-            assembly=snakemake.params.assembly)
+            assembly=snakemake.params.assembly,
+            cache_dir=snakemake.params.cache_dir)
     exec_time = (time.time() - start) / 60
     MexUtils.console_print("info", f"VEP completed in {exec_time} minutes")
