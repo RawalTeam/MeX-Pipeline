@@ -22,10 +22,10 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
     warn_dir = os.path.join(os.path.dirname(ngs_te_mapper2_non_ref_ann_vcf), "warn")
     html_dir = os.path.join(os.path.dirname(ngs_te_mapper2_non_ref_ann_vcf), "html")
 
-    if not MexUtils.make_dirs(os.path.dirname(warn_dir)):
+    if not MexUtils.make_dirs(warn_dir):
         sys.exit(1)
 
-    if not MexUtils.make_dirs(os.path.dirname(html_dir)):
+    if not MexUtils.make_dirs(html_dir):
         sys.exit(1)
 
     if MexUtils.check_file_exists(ngs_te_mapper2_non_ref_vcf):
