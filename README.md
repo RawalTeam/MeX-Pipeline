@@ -89,7 +89,7 @@ The Read2 FASTQ file from a paired-end sequencing run.
             |_ fastp*
             |_ fastqc*
             |_ ngs_te_mapper2*
-            |_ vep* (created only if non-reference TE found)
+            |_ vep*
         |_ config.json (internal configuration file)
         |_ Snakefile (snakemake file)
         |_ workflow.html (snakemake report)
