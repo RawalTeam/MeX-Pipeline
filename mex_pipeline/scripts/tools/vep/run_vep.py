@@ -94,7 +94,7 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
             "filter_vep",
             f"-i {ngs_te_mapper2_ref_ann_vcf}",
             "-filter \"CANONICAL\"",
-            f"-o {os.path.join(out_dir, 'canonical_' + ngs_te_mapper2_ref_ann_vcf_name)}"
+            f"-o {os.path.join(out_dir, 'canonical_' + ngs_te_mapper2_ref_ann_vcf_name + '.vcf')}"
         ]
         cmd = " ".join(cmd)
         MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
@@ -104,7 +104,7 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
             "filter_vep",
             f"-i {ngs_te_mapper2_non_ref_ann_vcf}",
             "-filter \"CANONICAL\"",
-            f"-o {os.path.join(out_dir, 'canonical_' + ngs_te_mapper2_non_ref_ann_vcf_name)}"
+            f"-o {os.path.join(out_dir, 'canonical_' + ngs_te_mapper2_non_ref_ann_vcf_name + '.vcf')}"
         ]
         cmd = " ".join(cmd)
         MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
