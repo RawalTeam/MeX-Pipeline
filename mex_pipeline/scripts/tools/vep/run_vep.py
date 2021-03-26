@@ -40,7 +40,7 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
                 f"-i {ngs_te_mapper2_non_ref_vcf}",
                 f"-o {ngs_te_mapper2_non_ref_ann_vcf}",
                 f"--warning_file {os.path.join(warn_dir, ngs_te_mapper2_non_ref_ann_vcf_name + '_warn.txt')}",
-                "-e"
+                "-e",
                 "--cache",
                 "--refseq",
                 f"-a {assembly}",
@@ -68,7 +68,7 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
                 f"-i {ngs_te_mapper2_ref_vcf}",
                 f"-o {ngs_te_mapper2_ref_ann_vcf}",
                 f"--warning_file {os.path.join(warn_dir, ngs_te_mapper2_ref_ann_vcf_name + '_warn.txt')}",
-                "-e"
+                "-e",
                 "--cache",
                 "--refseq",
                 f"-a {assembly}",
