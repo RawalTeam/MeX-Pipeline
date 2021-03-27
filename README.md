@@ -1,4 +1,7 @@
 # MeX Pipeline
+A pipeline for identification and annotation of transposable element (TE) insertions using next generation sequencing (NGS) data.
+
+![MeX Diagram](./images/MeXDiagram.svg)
 
 ### Pre-requisites
 1. Conda (<a href="https://docs.conda.io/en/latest/miniconda.html">Miniconda</a> or <a href="https://www.anaconda.com/products/individual">Anaconda</a>)
@@ -16,10 +19,10 @@ conda env create -f envs/mex.yaml --name mex
 Installing additional external dependencies
 ```bash
 conda activate mex
-python install_deps.py
+python install_deps.py --processes 2 --assembly GRCh38 --cachedir ~/.vep
 ```
 
-```
+```commandline
 usage: install_deps.py [-h] [-p PROCESSES] [-a ASSEMBLY] [-d CACHEDIR]
                        [-oa ONLY_ASSEMBLY]
 
@@ -42,6 +45,12 @@ optional arguments:
 
 ```
 
+Adding new human genome assembly into existing VEP cache
+```bash
+python install_deps.py --only-assembly GRCh37
+```
+- Require config.json in installation directory which was created in above step automatically.
+
 Running MeX Pipeline
 ```bash
 conda activate mex
@@ -52,6 +61,49 @@ Help
 ```bash
 conda activate mex
 python mex.py -h
+```
+```commandline
+usage: mex.py -1 FQ1 -g GENOME -te TE -O OUTDIR [-h] [-2 FQ2] [-p PROCESSES]
+              [--force] [--annotation ANNOTATION] [--window WINDOW]
+              [--min_mapq MIN_MAPQ] [--min_af MIN_AF] [--tsd_max TSD_MAX]
+              [--gap_max GAP_MAX] [--keep_files] [--assembly ASSEMBLY]
+
+required arguments:
+  -1 FQ1, --fq1 FQ1     FASTQ Read 1 (default: None)
+  -g GENOME, --genome GENOME
+                        Genome FASTA (default: None)
+  -te TE, --te TE       TE FASTA (default: None)
+  -O OUTDIR, --outdir OUTDIR
+                        Output Directory (default: None)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -2 FQ2, --fq2 FQ2     FASTQ Read 2 (default: None)
+  -p PROCESSES, --processes PROCESSES
+                        Number of processes for multiprocessing (default: 2)
+  --force               Rerun entire MeX pipeline (default: False)
+
+ngs_te_mapper2 arguments:
+  https://github.com/bergmanlab/ngs_te_mapper2#command-line-help-page
+
+  --annotation ANNOTATION
+                        reference TE annotation in GFF3 format (must have
+                        'Target' attribute in the 9th column) (default: None)
+  --window WINDOW       merge window for identifying TE clusters (default: 10)
+  --min_mapq MIN_MAPQ   minimum mapping quality of alignment (default: 20)
+  --min_af MIN_AF       minimum allele frequency (default: 0.1)
+  --tsd_max TSD_MAX     maximum TSD size (default: 25)
+  --gap_max GAP_MAX     maximum gap size (default: 5)
+  --keep_files          If provided then all ngs_te_mapper2 intermediate files
+                        will be kept (default: False)
+
+Ensembl Variant Effect Predictor (VEP) arguments:
+  https://asia.ensembl.org/info/docs/tools/vep/script/vep_options.html#basic
+
+  --assembly ASSEMBLY   Genome assembly ex., GRCh38, GRCh37, and other. See
+                        VEP docs (https://www.ensembl.org/info/docs/tools/vep/
+                        script/vep_other.html#assembly) (default: GRCh38)
+
 ```
 
 ### Components of MeX Pipeline
@@ -95,27 +147,3 @@ The Read2 FASTQ file from a paired-end sequencing run.
         |_ workflow.html (snakemake report)
     
     * Is a directory
-
-### Usages of mex.py
-```
-usage: mex.py [-h] -1 FQ1 -g GENOME -te TE -O OUTDIR [-2 FQ2] [-p PROCESSES]
-              [-a ASSEMBLY] [--force]
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -1 FQ1, --fq1 FQ1     FASTQ Read 1 * (default: None)
-  -g GENOME, --genome GENOME
-                        Genome FASTA * (default: None)
-  -te TE, --te TE       TE FASTA * (default: None)
-  -O OUTDIR, --outdir OUTDIR
-                        Output Directory * (default: None)
-  -2 FQ2, --fq2 FQ2     FASTQ Read 2 (default: None)
-  -p PROCESSES, --processes PROCESSES
-                        Number of processes for multiprocessing (default: 2)
-  -a ASSEMBLY, --assembly ASSEMBLY
-                        Genome assembly ex., GRCh38, GRCh37, and other. See
-                        VEP docs (https://www.ensembl.org/info/docs/tools/vep
-                        /script/vep_other.html#assembly) (default: GRCh38)
-  --force               Rerun entire MeX pipeline (default: False)
-
-```
