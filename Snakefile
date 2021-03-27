@@ -44,7 +44,14 @@ rule rule_run_ngs_te_mapper2:
         tool_config = config['params']['tools_config'],
         output_dir = config['outputs']['ngs_te_mapper2'],
         log_file = config['logs']['ngs_te_mapper2'],
-        mex_path = config['params']['mex_path']
+        mex_path = config['params']['mex_path'],
+        annotation = config['args']['ngs_te_mapper2']['annotation'],
+        window = config['args']['ngs_te_mapper2']['window'],
+        min_mapq = config['args']['ngs_te_mapper2']['min_mapq'],
+        min_af = config['args']['ngs_te_mapper2']['min_af'],
+        tsd_max = config['args']['ngs_te_mapper2']['tsd_max'],
+        gap_max = config['args']['ngs_te_mapper2']['gap_max'],
+        keep_files = config['args']['ngs_te_mapper2']['keep_files'],
     threads: config['args']['processes']
     output:
         config['targets']['ngs_te_mapper2'][0],
@@ -59,7 +66,7 @@ rule rule_run_vep:
     params:
         log_file = config['logs']['vep'],
         mex_path = config['params']['mex_path'],
-        assembly = config['args']['assembly'],
+        assembly = config['args']['vep']['assembly'],
         cache_dir = config['params']['vep_cache_dir']
     threads: config['args']['processes']
     output:

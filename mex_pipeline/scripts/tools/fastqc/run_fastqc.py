@@ -22,6 +22,7 @@ def execute(fq1, fq2, paired, output_dir, thread, log_file):
     cmd.append(f"--threads={thread}")
 
     cmd = " ".join(cmd)
+    MexUtils.console_print("cmd", cmd)
     MexUtils.run_subprocess(cmd, log_file)
 
     with open(os.path.join(output_dir, "fastqc_done.txt"), "w") as f:

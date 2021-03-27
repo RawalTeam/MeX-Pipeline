@@ -25,6 +25,7 @@ def execute(input1_file, input2_file, output1_file, output2_file, log_file):
     cmd.append(f"-j {os.path.dirname(output1_file)}/fastp.json -h {os.path.dirname(output1_file)}/fastp.html")
 
     cmd = " ".join(cmd)
+    MexUtils.console_print("cmd", cmd)
     MexUtils.run_subprocess(cmd, log_file)
 
 

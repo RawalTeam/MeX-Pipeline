@@ -143,20 +143,33 @@ class Mex:
     def __init__(self, cli_args):
         self.PROJECT_DIR = os.path.dirname(os.path.dirname(__file__))
 
+        # Required Arguments
         self.fastq1 = os.path.abspath(cli_args.fq1)
+        self.genome = os.path.abspath(cli_args.genome)
+        self.tefasta = os.path.abspath(cli_args.te)
+        self.out_dir = os.path.abspath(cli_args.outdir)
+
+        # Optional Arguments
         if cli_args.fq2 is not None:
             self.fastq2 = os.path.abspath(cli_args.fq2)
         else:
             self.fastq2 = None
-        self.genome = os.path.abspath(cli_args.genome)
-        self.tefasta = os.path.abspath(cli_args.te)
-        self.out_dir = os.path.abspath(cli_args.outdir)
         self.threads = cli_args.processes
         self.force = cli_args.force
+
+        # ngs_te_mapper2 Arguments
+        self.annotation = cli_args.annotation
+        self.window = cli_args.window
+        self.min_mapq = cli_args.min_mapq
+        self.min_af = cli_args.min_af
+        self.tsd_max = cli_args.tsd_max
+        self.gap_max = cli_args.gap_max
+        self.keep_files = cli_args.keep_files
+
+        # VEP Arguments
         self.assembly = cli_args.assembly
 
         self.genome_name = os.path.basename(self.genome).split(".")[0]
-
         MexUtils.make_dirs(self.out_dir)
         MexUtils.make_dirs(os.path.join(self.out_dir, "logs"))
         self.check_input_files()
@@ -166,8 +179,8 @@ class Mex:
         self.tools_config = os.path.join(self.PROJECT_DIR, "installation/config.json")
         with open(self.tools_config) as f:
             self.tools_config_obj = json.load(f)
-        self.config = self.create_config()
 
+        self.config = self.create_config()
         with open(os.path.join(self.out_dir, "config.json"), "w") as config_json:
             json.dump(self.config, config_json, indent=4)
 
@@ -212,8 +225,19 @@ class Mex:
                 "outdir": self.out_dir,
                 "force": self.force,
                 "processes": self.threads,
-                "threads": max(1, MexUtils.calculate_max_threads_per_rule(int(self.threads), multi_methods_used=5)),
-                "assembly": self.assembly
+                "threads": max(1, MexUtils.calculate_max_threads_per_rule(int(self.threads), multi_methods_used=3)),
+                "ngs_te_mapper2": {
+                    "annotation": self.annotation,
+                    "window": self.window,
+                    "min_mapq": self.min_mapq,
+                    "min_af": self.min_af,
+                    "tsd_max": self.tsd_max,
+                    "gap_max": self.gap_max,
+                    "keep_files": self.keep_files
+                },
+                "vep": {
+                    "assembly": self.assembly,
+                }
             },
             "params": {
                 "paired": is_paired,
@@ -238,8 +262,8 @@ class Mex:
                     os.path.join(self.out_dir, "outputs/ngs_te_mapper2", "reference.vcf")
                 ],
                 "vep": [
-                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper2", sample_name + "_reference_ann.vcf"),
-                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper2", sample_name + "_non_reference_ann.vcf"),
+                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper2", "reference_ann.vcf"),
+                    os.path.join(self.out_dir, "outputs/vep/ngs_te_mapper2", "non_reference_ann.vcf"),
                 ]
             },
             "envs": {
@@ -276,16 +300,36 @@ class Mex:
         start = time.time()
         print(f"{'*'*25} Executing MeX (v1) {'*'*25}")
         print("Parameters info:")
+        print("Required Arguments:")
         print(f"FASTQ 1 = {self.fastq1}")
-        print(f"FASTQ 2 = {self.fastq2}")
         print(f"GENOME = {self.genome}")
         print(f"TE FASTA = {self.tefasta}")
-        print(f"ASSEMBLY = {self.assembly}")
         print(f"OUTPUT DIRECTORY = {self.out_dir}/outputs")
-        print(f"LOG DIRECTORY = {self.out_dir}/logs")
+
+        print()
+        print("Optional Arguments:")
+        print(f"FASTQ 2 = {self.fastq2}")
         print(f"NUMBER OF PROCESS = {self.threads}")
-        print(f"CONFIG FILE = {os.path.join(self.out_dir, 'config.json')}")
         print(f"FORCE = {self.force}")
+
+        print()
+        print("ngs_te_mapper2 Arguments:")
+        print(f"ANNOTATION = {self.annotation}")
+        print(f"WINDOW = {self.window}")
+        print(f"MIN_MAPQ = {self.min_mapq}")
+        print(f"MIN_AF = {self.min_af}")
+        print(f"TSD_MAX = {self.tsd_max}")
+        print(f"GAP_MAX = {self.gap_max}")
+        print(f"KEEP ngs_te_mapper2 INTERMEDIATE FILES = {self.keep_files}")
+
+        print()
+        print("Ensembl Variant Effect Predictor (VEP) Arguments:")
+        print(f"ASSEMBLY = {self.assembly}")
+
+        print()
+        print("Other Files:")
+        print(f"LOG DIRECTORY = {self.out_dir}/logs")
+        print(f"CONFIG FILE = {os.path.join(self.out_dir, 'config.json')}")
 
         shutil.copy(self.snakefile_path, os.path.join(self.out_dir, "Snakefile"))
 

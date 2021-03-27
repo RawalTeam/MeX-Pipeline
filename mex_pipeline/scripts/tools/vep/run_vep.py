@@ -50,15 +50,19 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
                 "\"Uploaded_variation,Location,SYMBOL,ZYG,CANONICAL,Allele,Gene,Feature,Feature_type,Consequence,"
                 "Amino_acids,Codons,Existing_variation,IMPACT,VARIANT_CLASS,HGVSc,HGVSp,HGVSg,INTRON,EXON,BIOTYPE,"
                 "AF,PUBMED,PHENO,SIFT,PolyPhen\"",
+                f"--fork {threads}",
                 f"--stats_file {os.path.join(html_dir, ngs_te_mapper2_non_ref_ann_vcf_name + '.html')}"
             ]
             cmd = " ".join(cmd)
+            MexUtils.console_print("cmd", cmd)
             MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
         else:
             cmd = f"touch {ngs_te_mapper2_non_ref_ann_vcf}"
+            MexUtils.console_print("cmd", cmd)
             MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
     else:
         cmd = f"touch {ngs_te_mapper2_non_ref_ann_vcf}"
+        MexUtils.console_print("cmd", cmd)
         MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
 
     if MexUtils.check_file_exists(ngs_te_mapper2_ref_vcf):
@@ -78,15 +82,19 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
                 "\"Uploaded_variation,Location,SYMBOL,ZYG,CANONICAL,Allele,Gene,Feature,Feature_type,Consequence,"
                 "Amino_acids,Codons,Existing_variation,IMPACT,VARIANT_CLASS,HGVSc,HGVSp,HGVSg,INTRON,EXON,BIOTYPE,"
                 "AF,PUBMED,PHENO,SIFT,PolyPhen\"",
+                f"--fork {threads}",
                 f"--stats_file {os.path.join(html_dir, ngs_te_mapper2_ref_ann_vcf_name + '.html')}"
             ]
             cmd = " ".join(cmd)
+            MexUtils.console_print("cmd", cmd)
             MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
         else:
             cmd = f"touch {ngs_te_mapper2_ref_ann_vcf}"
+            MexUtils.console_print("cmd", cmd)
             MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
     else:
         cmd = f"touch {ngs_te_mapper2_ref_ann_vcf}"
+        MexUtils.console_print("cmd", cmd)
         MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
 
     if not MexUtils.is_file_empty(ngs_te_mapper2_ref_ann_vcf):
@@ -97,6 +105,7 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
             f"-o {os.path.join(out_dir, 'canonical_' + ngs_te_mapper2_ref_ann_vcf_name + '.vcf')}"
         ]
         cmd = " ".join(cmd)
+        MexUtils.console_print("cmd", cmd)
         MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
 
     if not MexUtils.is_file_empty(ngs_te_mapper2_non_ref_ann_vcf):
@@ -107,6 +116,7 @@ def execute(ngs_te_mapper2_vcfs, assembly, outputs, log_file, threads, cache_dir
             f"-o {os.path.join(out_dir, 'canonical_' + ngs_te_mapper2_non_ref_ann_vcf_name + '.vcf')}"
         ]
         cmd = " ".join(cmd)
+        MexUtils.console_print("cmd", cmd)
         MexUtils.run_subprocess(cmd, log_file, log_mode="a+")
 
 
