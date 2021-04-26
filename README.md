@@ -46,15 +46,35 @@ optional arguments:
 ```
 
 Adding new human genome assembly into existing VEP cache
+- Require config.json in installation directory which was created in above step automatically.
 ```bash
+conda activate mex
 python install_deps.py --only-assembly GRCh37
 ```
-- Require config.json in installation directory which was created in above step automatically.
+
+Downloading sample data (Human)\
+Contents
+* Paired NGS reads files of human
+* Human Chromosome 1, 2, and 3 Genome Fasta
+* FASTA of Alu Element
+
+<sup>50 GB disk space required</sup>
+
+```bash
+conda activate mex
+python download_example_files.py
+```
 
 Running MeX Pipeline
 ```bash
 conda activate mex
-python mex.py --fq1 path/of/fastq1 --genome path/of/fasta --te path/of/fasta --outdir path/of/output_folder -p 2
+python mex.py \
+    --fq1 example/SRR622461_1.filt.fastq \
+    --fq2 example/SRR622461_2.filt.fastq \
+    --genome example/hg38_chr123.fa \
+    --te example/RMRBSeqs_Original_Alu.fasta -p 2 \
+    --outdir example/results \
+    --processes 4
 ```
 
 Help
