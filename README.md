@@ -19,6 +19,7 @@ conda env create -f envs/mex.yaml --name mex
 Installing additional external dependencies
 ```bash
 conda activate mex
+conda install mamba -n base -c conda-forge
 python install_deps.py --processes 2 --assembly GRCh38 --cachedir ~/.vep
 ```
 

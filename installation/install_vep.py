@@ -3,7 +3,8 @@ import subprocess
 
 def execute(log, target, cache_dir, assembly):
     with open(log, "a") as f:
-        subprocess.check_call([f"vep_install -a cf -s homo_sapiens_refseq -y {assembly} --CONVERT -c {cache_dir}"],
+        subprocess.check_call([f"vep_install -a cf -s homo_sapiens_refseq -y {assembly} --CONVERT -c {cache_dir}"
+                               f" --NO_HTSLIB --NO_TEST --NO_UPDATE --QUIET"],
                               shell=True, stderr=f, stdout=f)
 
     with open(target, "w") as f:
